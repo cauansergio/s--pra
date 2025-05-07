@@ -1,68 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pra você</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
     <style>
+      * {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       body {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
+        background-color: #121212;
       }
       a {
         text-decoration: none;
+        color: inherit;
       }
       .box {
         font-size: 20px;
         color: beige;
         height: 250px;
         width: 350px;
-        border-radius: 10px;
+        border-radius: 15px;
         background: #191919;
         flex-direction: column;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        text-align: center;
+        padding: 20px;
       }
       .buttons-container {
         display: flex;
         justify-content: space-around;
-        height: 50px;
-        width: 150px;
+        gap: 20px;
+        margin-top: 20px;
       }
       button {
-        height: 30px;
-        width: 50px;
+        height: 40px;
+        width: 70px;
         background: white;
-        border-radius: 5px;
-        color: blue;
+        border-radius: 8px;
+        color: #1a1aff;
         font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      button:hover {
+        transform: scale(1.1);
+        background: #e0e0e0;
+      }
+      #no {
+        position: relative;
+        transition: top 0.3s ease, left 0.3s ease;
+      }
+      .shake {
+        animation: shake 0.3s;
+      }
+      @keyframes shake {
+        0% { transform: translate(0, 0); }
+        25% { transform: translate(-5px, 5px); }
+        50% { transform: translate(5px, -5px); }
+        75% { transform: translate(-5px, -5px); }
+        100% { transform: translate(0, 0); }
+      }
+      .hidden {
+        display: none;
+      }
+      .result {
+        text-align: center;
+        color: white;
+      }
+      .result img {
+        width: 300px;
+        border-radius: 15px;
+        margin-bottom: 20px;
       }
     </style>
   </head>
   <body>
-    <div class="box">
+    <div class="box" id="questionBox">
       <p>QUER NAMORAR COMIGO?</p>
       <div class="buttons-container">
-        <button>
-          <a href="https://link.com">SIM</a>
-        </button>
+        <button id="yes">SIM</button>
         <button id="no">NÃO</button>
       </div>
     </div>
-  </body>
-  <script>
-    let button = document.getElementById("no");
-    let height = window.innerHeight - 50;
-    let width = window.innerWidth - 50;
 
-    button.addEventListener("mouseover", function () {
-      button.style.position = "absolute";
-      button.style.top = Math.random() * height + "px";
-      button.style.left = Math.random() * width + "px";
-    });
-  </script>
+    <div class="result hidden" id="resultBox">
+      <img src="/mnt/data/file-8mQUKUWgm5FCNkiNUiiRFQ" alt="Gato com flor" />
+      <h2>te vejo às 19 horas</h2>
+    </div>
+
+    <audio id="funnySound" src="https://www.myinstants.com/media/sounds/trololo.mp3"></audio>
+
+    <script>
+      const buttonNo = document.getElementById("no");
+      const buttonYes = document.getElementById("yes");
+      const sound = document.getElementById("funnySound");
+      const height = window.innerHeight - 100;
+      const width = window.innerWidth - 100;
+
+      buttonNo.addEventListener("mouseover", function () {
+        buttonNo.style.position = "absolute";
+        buttonNo.style.top = Math.random() * height + "px";
+        buttonNo.style.left = Math.random() * width + "px";
+
+        sound.currentTime = 0;
+        sound.play();
+
+        buttonNo.classList.add("shake");
+        setTimeout(() => buttonNo.classList.remove("shake"), 300);
+      });
+
+      buttonYes.addEventListener("click", function () {
+        document.getElementById("questionBox").classList.add("hidden");
+        document.getElementById("resultBox").classList.remove("hidden");
+      });
+    </script>
+  </body>
 </html>
